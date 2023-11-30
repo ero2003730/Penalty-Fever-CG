@@ -177,7 +177,10 @@ class World {
         const far = 1000.0;
 
         this._camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-        this._camera.position.set(75, 20, 0);
+        this._camera.position.set(0, 5, 0); // Posição central e elevada
+    
+        // Ajuste a rotação da câmera para olhar para o centro do campo
+        this._camera.lookAt(new THREE.Vector3(0, 0, 0)); 
 
         this._scene = new THREE.Scene();
 
@@ -221,10 +224,12 @@ class World {
         plane.castShadow = false;
         plane.receiveShadow = true;
         plane.rotation.x = -Math.PI / 2;
-        this._CreateGoal(0, 0, -50); // Posição do gol em uma extremidade
-        this._CreateGoal(0, 0, 50);  // Posição do gol na outra extremidade
+        this._CreateGoal(0, 0, -45); // Movendo 5 unidades para frente
+        this._CreateGoal(0, 0, 45);  // Movendo 5 unidades para frente
+
         this._CreateMidfieldLine();
         this._CreateCenterCircle();
+
 
         this._scene.add(plane);
 
@@ -295,6 +300,12 @@ class World {
         circle.position.y = 0.1;
         this._scene.add(circle);
     }
+
+
+    
+    
+    
+    
     
     
 
