@@ -203,10 +203,15 @@ class World {
         ]);
         this._scene.background = texture;
 
+        const grassTexture = new THREE.TextureLoader().load('/home/enzo/Faculdade/Projeto-final/Penalty-Fever-CG/img/fundo-de-grama-verde-campo-de-futebol_41969-1803.jpg');
+        grassTexture.wrapS = THREE.RepeatWrapping;
+        grassTexture.wrapT = THREE.RepeatWrapping;
+        grassTexture.repeat.set(10, 10);
+
         const plane = new THREE.Mesh(
             new THREE.PlaneGeometry(100, 100, 10, 10),
             new THREE.MeshStandardMaterial({
-                color: 0x808080,
+                map: grassTexture,
             })
         );
         plane.castShadow = false;
