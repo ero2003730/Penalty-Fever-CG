@@ -1,4 +1,13 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js";
+const grassTexture = new THREE.TextureLoader().load('../img/fundo-de-grama-verde-campo-de-futebol_41969-1803.jpg');
+grassTexture.wrapS = THREE.RepeatWrapping;
+grassTexture.wrapT = THREE.RepeatWrapping;
+grassTexture.repeat.set(10, 10);
+
+const netTexture = new THREE.TextureLoader().load('path/to/net_texture.png');
+netTexture.wrapS = THREE.RepeatWrapping;
+netTexture.wrapT = THREE.RepeatWrapping;
+
 
 class InputController {
     constructor() {
@@ -203,11 +212,6 @@ class World {
         ]);
         this._scene.background = texture;
 
-        const grassTexture = new THREE.TextureLoader().load('/home/enzo/Faculdade/Projeto-final/Penalty-Fever-CG/img/fundo-de-grama-verde-campo-de-futebol_41969-1803.jpg');
-        grassTexture.wrapS = THREE.RepeatWrapping;
-        grassTexture.wrapT = THREE.RepeatWrapping;
-        grassTexture.repeat.set(10, 10);
-
         const plane = new THREE.Mesh(
             new THREE.PlaneGeometry(100, 100, 10, 10),
             new THREE.MeshStandardMaterial({
@@ -217,6 +221,11 @@ class World {
         plane.castShadow = false;
         plane.receiveShadow = true;
         plane.rotation.x = -Math.PI / 2;
+        this._CreateGoal(0, 0, -50); // Posição do gol em uma extremidade
+        this._CreateGoal(0, 0, 50);  // Posição do gol na outra extremidade
+        this._CreateMidfieldLine();
+        this._CreateCenterCircle();
+
         this._scene.add(plane);
 
         this.controls = new FirstPersonCamera(this._camera);
@@ -248,6 +257,47 @@ class World {
 
         this.controls.update(timeElapsedS);
     }
+
+    _CreateGoal(x, y, z) {
+        const goalPostsMaterial = new THREE.MeshStandardMaterial({ color: 0xFFFFFF });
+        const crossbarMaterial = new THREE.MeshStandardMaterial({ color: 0xFFFFFF });
+
+        const post1 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 10, 32), goalPostsMaterial);
+        const post2 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 10, 32), goalPostsMaterial);
+        const crossbar = new THREE.Mesh(new THREE.BoxGeometry(7, 0.5, 0.5), crossbarMaterial);
+
+        post1.position.set(x - 3, y + 5, z);
+        post2.position.set(x + 3, y + 5, z);
+        crossbar.position.set(x, y + 10, z);
+
+        this._scene.add(post1);
+        this._scene.add(post2);
+        this._scene.add(crossbar);
+    }
+
+    _CreateMidfieldLine() {
+        const material = new THREE.MeshBasicMaterial({ color: 0xFFFFFF, side: THREE.DoubleSide });
+        const geometry = new THREE.PlaneGeometry(100, 0.5); // Comprimento 100, espessura 0.5
+        const line = new THREE.Mesh(geometry, material);
+        line.rotation.x = -Math.PI / 2;
+        line.position.y = 0.1;
+        this._scene.add(line);
+    }
+    
+    
+    _CreateCenterCircle() {
+        const outerRadius = 9.15; // Raio externo do círculo
+        const innerRadius = 8.95; // Raio interno do círculo, criando um anel
+        const geometry = new THREE.RingGeometry(innerRadius, outerRadius, 32);
+        const material = new THREE.MeshBasicMaterial({ color: 0xFFFFFF, side: THREE.DoubleSide });
+        const circle = new THREE.Mesh(geometry, material);
+        circle.rotation.x = -Math.PI / 2;
+        circle.position.y = 0.1;
+        this._scene.add(circle);
+    }
+    
+    
+
 }
 
 let _APP = null;
