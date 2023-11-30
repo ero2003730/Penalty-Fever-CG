@@ -178,9 +178,9 @@ class World {
 
         this._camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
         this._camera.position.set(0, 5, 0); // Posição central e elevada
-    
+
         // Ajuste a rotação da câmera para olhar para o centro do campo
-        this._camera.lookAt(new THREE.Vector3(0, 0, 0)); 
+        this._camera.lookAt(new THREE.Vector3(0, 0, 0));
 
         this._scene = new THREE.Scene();
 
@@ -269,10 +269,10 @@ class World {
 
         const post1 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 10, 32), goalPostsMaterial);
         const post2 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 10, 32), goalPostsMaterial);
-        const crossbar = new THREE.Mesh(new THREE.BoxGeometry(7, 0.5, 0.5), crossbarMaterial);
+        const crossbar = new THREE.Mesh(new THREE.BoxGeometry(16.5, 0.8, 0.5), crossbarMaterial);
 
-        post1.position.set(x - 3, y + 5, z);
-        post2.position.set(x + 3, y + 5, z);
+        post1.position.set(x - 8, y + 5.34, z);
+        post2.position.set(x + 8, y + 5.34, z);
         crossbar.position.set(x, y + 10, z);
 
         this._scene.add(post1);
@@ -288,8 +288,8 @@ class World {
         line.position.y = 0.1;
         this._scene.add(line);
     }
-    
-    
+
+
     _CreateCenterCircle() {
         const outerRadius = 9.15; // Raio externo do círculo
         const innerRadius = 8.95; // Raio interno do círculo, criando um anel
@@ -302,12 +302,12 @@ class World {
     }
 
 
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
 
 }
 
