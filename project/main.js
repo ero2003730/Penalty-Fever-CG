@@ -3,8 +3,7 @@ import * as THREE from 'three';
 import * as Field from './src/field.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-
-
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 
 // Criação da cena, câmera e renderer
 const scene = new THREE.Scene();
@@ -30,20 +29,20 @@ const field = Field.createField(texturePath);
 scene.add(field);
 
 // Crie um carregador para o modelo GLTF
-const loader = new GLTFLoader();
+const gltfLoader = new GLTFLoader();
 
 // Caminho para o seu arquivo GLTF
 const goal_model = '/models/soccer_goal/scene.gltf';
 
 // Carregar o modelo e adicioná-lo à cena
-loader.load(goal_model, (gltf) => {
+gltfLoader.load(goal_model, (gltf) => {
     const goal = gltf.scene;
 
     // Ajusta a posição do gol
     goal.position.x = -915; // Move o gol 100 unidades para trás
 
     // Ajusta a escala do modelo se necessário
-    goal.scale.set(0.5, 1, 1.1);
+    goal.scale.set(0.5, 1, 1.6);
 
     // Adiciona o gol à cena
     scene.add(goal);
@@ -54,20 +53,32 @@ loader.load(goal_model, (gltf) => {
 const ball_model = '/models/soccer_ball/scene.gltf';
 
 // Carregar o modelo e adicioná-lo à cena
-loader.load(ball_model, (gltf) => {
+gltfLoader.load(ball_model, (gltf) => {
     const ball = gltf.scene;
 
     // Ajusta a posição da bola
     ball.position.x = 200; // Move a bola 100 unidades para trás
-    ball.position.y = -220; // Move a bola 100 unidades para trás
+    ball.position.y = -140; // Move a bola 100 unidades para trás
 
     // Ajusta a escala do modelo se necessário
-    ball.scale.set(19, 19, 19);
+    ball.scale.set(12, 12, 12);
 
     // Adiciona a bola à cena
     scene.add(ball);
 }, undefined, (error) => {
     console.error('An error happened while loading the model:', error);
+});
+
+const fbxLoader = new FBXLoader();
+
+// Carregar o modelo FBX
+fbxLoader.load('/models/soccer_player/soccer_player.fbx', (player) => {
+
+    player.scale.set(1.5, 1.5, 1.5);
+    // Ajustes no objeto, como escala e posição
+    scene.add(player);
+}, undefined, (error) => {
+    console.error('An error happened during the loading:', error);
 });
 
 
@@ -77,8 +88,8 @@ loader.load(ball_model, (gltf) => {
 
 // Animação
 function animate() {
-  requestAnimationFrame(animate);
-  renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
 }
 
 const controls = new OrbitControls(camera, renderer.domElement);
