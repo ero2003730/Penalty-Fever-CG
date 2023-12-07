@@ -1,15 +1,40 @@
 // main.js
 import * as THREE from 'three';
 import * as Field from './field.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+
+// Crie um carregador para o modelo GLTF
+const loader = new GLTFLoader();
+
+// Caminho para o seu arquivo GLTF
+const modelPath = '/models/soccer_goal/scene.gltf';
+
+// Carregar o modelo e adicioná-lo à cena
+loader.load(modelPath, (gltf) => {
+  const goal = gltf.scene;
+
+  // Ajusta a posição do gol
+  goal.position.x = -915; // Move o gol 100 unidades para trás
+
+  // Ajusta a escala do modelo se necessário
+  goal.scale.set(0.5, 1, 1.1);
+
+  // Adiciona o gol à cena
+  scene.add(goal);
+}, undefined, (error) => {
+  console.error('An error happened while loading the model:', error);
+});
+
 
 
 // Criação da cena, câmera e renderer
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x87ceeb); // Cor do céu
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(0, 30, 70);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
+camera.position.set(100, 1000, 0);
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -23,7 +48,7 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
 scene.add(directionalLight);
 
 // Adicionando o campo à cena
-const texturePath = '/img/field.jpg'; 
+const texturePath = '/img/quadra.jpeg';
 const field = Field.createField(texturePath);
 scene.add(field);
 

@@ -7,7 +7,7 @@ export function createField(texturePath) {
   const texture = loader.load(texturePath);
 
   // Criação do campo de futebol com a textura
-  const fieldGeometry = new THREE.PlaneGeometry(100, 50); // Dimensões do campo
+  const fieldGeometry = new THREE.PlaneGeometry(2500, 4000); // Dimensões do campo
   const fieldMaterial = new THREE.MeshLambertMaterial({ map: texture }); // Uso da textura
   const field = new THREE.Mesh(fieldGeometry, fieldMaterial);
   field.rotation.x = -Math.PI / 2; // Rotacionar para ficar horizontal
