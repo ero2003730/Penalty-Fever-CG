@@ -70,7 +70,6 @@ loader.load(ball_model, (gltf) => {
     console.error('An error happened while loading the model:', error);
 });
 
-Field.createWalls(scene); // Adicionando paredes
 
 // Adicionando linhas ao campo
 //Field.addLine(scene, 0, 0, 90, 1); // Linha do meio

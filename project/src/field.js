@@ -25,10 +25,10 @@ export function addLine(scene, x, y, width, height, color = 0xffffff) {
 }
 
 export function createWalls(scene) {
-  const wallHeight = 500; // Altura das paredes
+  const wallHeight = 50000; // Altura das paredes
   const wallThickness = 50; // Espessura das paredes
-  const fieldWidth = 4000; // Largura do campo
-  const fieldLength = 2500; // Comprimento do campo
+  const fieldWidth = 2500; // Largura do campo
+  const fieldLength = 4000; // Comprimento do campo
 
   const wallMaterial = new THREE.MeshLambertMaterial({ color: 0xD3D3D3 }); // Cor cinza claro para as paredes
 
@@ -48,7 +48,5 @@ export function createWalls(scene) {
   backWall.position.set(-fieldWidth / 2 - wallThickness / 2, wallHeight / 2, 0);
   scene.add(backWall);
 
-  const frontWall = new THREE.Mesh(widthWallGeometry, wallMaterial);
-  frontWall.position.set(fieldWidth / 2 + wallThickness / 2, wallHeight / 2, 0);
-  scene.add(frontWall);
+ 
 }
